@@ -78,8 +78,8 @@ public class DataSource: NSObject {
 
     /// If you have a use for `UITableViewDelegate` or `UIScrollViewDelegate` messages, you can use this property to receive those messages. `DataSource` needs to be the `UITableView` instance's true `delegate`, but will forward messages to this property.
     /// You must pass this in the `init` function.
-    weak public private(set) var tableViewDelegate: UITableViewDelegate?
-
+    weak public var tableViewDelegate: UITableViewDelegate?
+    
     override public func forwardingTarget(for aSelector: Selector!) -> Any? {
         if let forwardDelegate = tableViewDelegate, forwardDelegate.responds(to: aSelector) {
             return forwardDelegate
@@ -209,6 +209,13 @@ extension DataSource: UITableViewDataSource {
         return UITableViewCell()
     }
 
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let row = row(at: indexPath), let height = row.cellHeight {
+            return height
+        }
+        return tableView.rowHeight
+    }
+    
     public func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }

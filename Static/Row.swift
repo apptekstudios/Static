@@ -111,6 +111,9 @@ public struct Row: Hashable, Equatable {
     /// Action to run when the row is selected.
     public var selection: Selection?
 
+    /// Custom height for this row (optional)
+    public var cellHeight: CGFloat?
+    
     /// View to be used for the row.
     public var cellClass: Cell.Type
 
@@ -140,7 +143,7 @@ public struct Row: Hashable, Equatable {
     // MARK: - Initializers
 
     public init(text: String? = nil, detailText: String? = nil, selection: Selection? = nil,
-        image: UIImage? = nil, accessory: Accessory = .none, cellClass: Cell.Type? = nil, context: Context? = nil, editActions: [EditAction] = [], uuid: String = UUID().uuidString) {
+                image: UIImage? = nil, accessory: Accessory = .none, cellClass: Cell.Type? = nil, context: Context? = nil, editActions: [EditAction] = [], uuid: String = UUID().uuidString, cellHeight: CGFloat? = nil) {
         
         self.uuid = uuid
         self.text = text
@@ -151,6 +154,7 @@ public struct Row: Hashable, Equatable {
         self.cellClass = cellClass ?? Value1Cell.self
         self.context = context
         self.editActions = editActions
+        self.cellHeight = cellHeight
     }
 }
 
